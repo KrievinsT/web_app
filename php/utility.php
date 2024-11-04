@@ -26,8 +26,7 @@
 				header("Access-Control-Allow-Origin: " . $origin);
 				header("Access-Control-Max-Age: 7200");
 				header("Access-Control-Allow-Credentials: true");
-				header("Access-Control-Allow-Methods: GET, POST, DELETE");
-				header("Access-Control-Allow-Headers: sb-header-size");
+				header("Access-Control-Allow-Methods: GET");
 			}
 		}
 
