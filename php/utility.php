@@ -94,7 +94,7 @@
 		{
 			return $_SERVER["HTTP_".$headerName];
 		}
-		else
+		else if(function_exists("getallheaders"))
 		{
 			return getallheaders()[implode("-", array_map(function($v)
 			{
@@ -103,6 +103,8 @@
 			},
 			explode("-", strtolower($name))))] ?? null;
 		}
+
+		return null;
 	}
 	function RemoveCookie($name)
 	{
