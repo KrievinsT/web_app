@@ -7,8 +7,15 @@ function App() {
 		alert("check console for data");
 	}
 
+	function OnError(error_string) // optional
+	{
+		alert(error_string)
+	}
+
 	return (
-		<InputForm onDataReceived={DataReceived}/>
+		<InputForm
+			onDataReceived={DataReceived}
+		/>
 	);
 }
 

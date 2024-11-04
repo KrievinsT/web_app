@@ -1,5 +1,5 @@
 <?php
-	$_DEBUG = true;
+	$_DEBUG = false;
 
 	$_valid_origins = [
 		"http://localhost:3000" => true
