@@ -53,7 +53,7 @@
 		){
 			global $_DEBUG;
 
-			if($_DEBUG === true && $errno === E_WARNING) // this is here because of the file_get_contents call in get_user_data.php, find a better solution if the project grows in scope (curl maybe)
+			if($_DEBUG === false && $errno === E_WARNING) // this is here because of the file_get_contents call in get_user_data.php, find a better solution if the project grows in scope (curl maybe)
 				return;
 
 			ExitResponse(ResponseType::ServerError, sprintf("Uncaught Error (%d) - Line %d of %s\n%s", $errno, $errline, $errfile, $errstr));
