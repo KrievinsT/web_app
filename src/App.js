@@ -15,6 +15,7 @@ function App() {
 	return (
 		<InputForm
 			onDataReceived={DataReceived}
+			onError={OnError}
 		/>
 	);
 }
