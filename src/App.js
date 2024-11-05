@@ -1,4 +1,4 @@
-import InputForm from "./components/InputForm/InputForm.js";
+import InputForm from "./components/InputForm";
 
 function App() {
 	function DataReceived(data)
