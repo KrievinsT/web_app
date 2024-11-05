@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import axios from "axios";
 
 function ValidUsername(str)
@@ -27,26 +29,33 @@ function ValidUsername(str)
 
 function InputForm(props)
 {
-	let _onError = props.onError ? props.onError : function(error_string){
-		console.error("Data Scrapper Error: " + error_string);
-	};
+	let _onSubmit = props.onSubmit ? props.onSubmit : function(event){
+		console.log("clicked")
+	}
+
+	let formElem = useRef(null);
+	
+	function OnError(error_string)
+	{
+		formElem.current.querySelector("p").innerText = error_string;
+	}
 
 	function OnSubmit(event)
 	{
-		let formElem = event.target.parentElement;
+		_onSubmit(event);
 
-		let userInput = formElem.querySelector("#user").value;
+		let userInput = formElem.current.querySelector("#user").value;
 
 		if(userInput === "")
-			return _onError("Please fill out the field");
+			return OnError("Please enter the target user");
 
-		let urlRegex = /https:\/\/www\.linkedin\.com\/in\/([^\/?]*?)\/*(\?.*)?$/; // check if string starts with https://www.linkedin.com/in/ and captures the next following string, allowing for a trailing slash and/or query string
+		let urlRegex = /https:\/\/www\.linkedin\.com\/in\/([^\/?]*?)\/*(\?.*)?$/; // check if string starts with https://www.linkedin.com/in/ and captures the following text, allowing for a trailing slash and/or query string
 		let urlMatch = userInput.match(urlRegex);
 
 		let username = urlMatch === null ? userInput : urlMatch[1];
 
 		if(!ValidUsername(username))
-			return _onError("User input contains invalid characters");
+			return OnError("Input contains invalid characters");
 		
 		axios.get("http://127.0.0.1/get_user_data.php", {
 			params: {
@@ -55,22 +64,24 @@ function InputForm(props)
 		}).then(function(response){
 			let responseData = response.data;
 			if(responseData.status === undefined)			
-				return _onError("Request failed");
+				return OnError("Request failed");
 
 			if(responseData.status !== 0)
-				return _onError("Request failed with message - " + responseData.data);
+				return OnError("Request failed with message - " + responseData.data);
 			
-			props.onDataReceived(responseData.data);			
+			formElem.current.querySelector("p").innerText = "";
+			props.onDataReceived(responseData.data);
 		}).catch(function(error){
-			return _onError(error.code + " - " + error.message);
+			return OnError(error.code + " - " + error.message);
 		});
 	}
 
 	return (
-		<div>
+		<div ref={formElem}>
 			<label>User Input (Name or URL): </label><br/>
 			<input type="text" id="user"/><br/>
-			<button onClick={OnSubmit}>Submit</button>
+			<button onClick={OnSubmit}>Submit</button><br/>
+			<p style={{color: "red"}}></p>
 		</div>
 	);
 }
