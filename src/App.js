@@ -7,15 +7,15 @@ function App() {
 		alert("check console for data");
 	}
 
-	function OnError(error_string) // optional
+	function OnSubmit(event) // optional
 	{
-		alert(error_string)
+		console.log("form submitted");
 	}
 
 	return (
 		<InputForm
 			onDataReceived={DataReceived}
-			onError={OnError}
+			onSubmit={OnSubmit}
 		/>
 	);
 }
