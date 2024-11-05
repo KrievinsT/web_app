@@ -40,7 +40,7 @@ function InputForm(props)
 		if(userInput === "")
 			return _onError("Please fill out the field");
 
-		let urlRegex = /https:\/\/www\.linkedin\.com\/in\/([^\/?]*?)\/*(\?.*)?$/; // check if string starts with https://www.linkedin.com/in/ and captures the next following string, allowing for a trailing slash and/or query string
+		let urlRegex = /https:\/\/www\.linkedin\.com\/in\/([^\/?]*?)\/*(\?.*)?$/; // check if string starts with https://www.linkedin.com/in/ and captures the following text, allowing for a trailing slash and/or query string
 		let urlMatch = userInput.match(urlRegex);
 
 		let username = urlMatch === null ? userInput : urlMatch[1];

@@ -29,7 +29,7 @@
 
 		return true;
 	}
-	
+
 	$username = GetAllRequestData()["username"] ?? null;
 	if($username === null)
 		ExitResponse(ResponseType::ClientError, "Username not provided");
