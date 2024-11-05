@@ -45,10 +45,8 @@ function InputForm(props)
 
 		let username = urlMatch === null ? userInput : urlMatch[1];
 
-		let specialCharsRegex = /[!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]+/;
-		if(specialCharsRegex.test(username))
-			return _onError("User input contains invalid characters");			
-
+		if(!ValidUsername(username))
+			return _onError("User input contains invalid characters");
 		
 		axios.get("http://127.0.0.1/get_user_data.php", {
 			params: {
