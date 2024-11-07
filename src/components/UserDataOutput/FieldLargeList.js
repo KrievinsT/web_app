@@ -11,7 +11,7 @@ export default function FieldLargeList({title, data}) // [{name: "...", value: .
 			<SubsectionTitle title={title}/>
 			{/*<p className="text-white pb-2 text-lg">{title}</p>*/}
 			<div className="
-				w-full h-36 max-h-36 rounded-xl
+				w-full h-[8.95rem] max-h-36 rounded-xl
 				bg-neutral-800
 				border-2 border-solid border-neutral-800
 				flex flex-col items-center justify-start
