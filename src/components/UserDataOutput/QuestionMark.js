@@ -2,6 +2,7 @@ export default function QuestionMark()
 {
 	return (
 		<div className="
+			select-none
 			w-full h-full
 			flex items-center justify-center
 			bg-neutral-800

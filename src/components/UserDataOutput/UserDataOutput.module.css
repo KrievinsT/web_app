@@ -1,0 +1,3 @@
+.base_div{
+	@apply w-[64rem] h-full bg-neutral-900 rounded flex;
+}

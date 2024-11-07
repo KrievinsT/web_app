@@ -85,8 +85,8 @@ export default function InputForm({onDataReceived})
 		<div className="
 			flex flex-col items-center justify-start
 			bg-gradient-to-b from-neutral-800 to-neutral-900 rounded
-			box-content px-9 py-8
-			w-64
+			box-content px-9 py-7
+			w-80 mr-8
 		">
 			<input
 				type="text"
@@ -100,7 +100,7 @@ export default function InputForm({onDataReceived})
 
 						focus:outline-none
 					"
-			/><br/>
+			/>
 			<button 
 				onClick={OnSubmit}
 				className="					
@@ -110,7 +110,7 @@ export default function InputForm({onDataReceived})
 				"
 			>
 				Submit
-			</button><br/>
+			</button>
 			<p className="text-red-600" ref={errorElem}></p>
 		</div>
 	);
