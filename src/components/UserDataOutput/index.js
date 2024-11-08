@@ -30,15 +30,13 @@ export default function UserDataOutput({data})
 	let currentJob;
 	if(jobs[0].end.year === 0)
 	{
-		console.log(jobs, jobs[0])
 		currentJob = [jobs[0].companyName];
 		jobs.shift();
 	}
 	else
 		currentJob = ["Nowhere"];
 
-	jobs = jobs.map(job => job.companyName);
-
+	jobs = jobs.map(job => ({title: job.companyName, value: job.start.year + " - " + job.end.year}));
 	let honors = data.honors;
 
 

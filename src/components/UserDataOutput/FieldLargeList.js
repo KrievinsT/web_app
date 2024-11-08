@@ -7,6 +7,7 @@ export default function FieldLargeList({title, data}) // [{name: "...", value: .
 		<div className="
 			w-full
 			flex flex-col items-center justify-start
+			
 		">
 			<SubsectionTitle title={title}/>
 			{/*<p className="text-white pb-2 text-lg">{title}</p>*/}
@@ -18,14 +19,19 @@ export default function FieldLargeList({title, data}) // [{name: "...", value: .
 				overflow-y-auto
 			">
 				{data.map((entry)=>
-					<p className="
+					<div className="
 						w-full mb-px last:mb-0
-						box-border px-3 py-[0.32em]
 						flex flex-row items-center justify-between
 						bg-neutral-900 text-white text-wrap
 					">
-						{entry /*border-b border-solid border-white last:border-b-0*/}
-					</p>
+						<p className="box-border pl-3 py-[0.32em]">{entry.title}</p>
+						<p className="
+							box-border px-3 py-[0.32em] w-32 text-center
+							border-l-2 border-solid border-neutral-700
+						">
+							{entry.value}
+						</p>
+					</div>
 				)}
 			</div>
 		</div>
