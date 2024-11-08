@@ -86,7 +86,7 @@ export default function InputForm({onDataReceived})
 			flex flex-col items-center justify-start
 			bg-gradient-to-b from-neutral-800 to-neutral-900 rounded
 			box-content px-9 py-7
-			w-80 mr-8
+			w-80 2xl:mr-8
 		">
 			<input
 				type="text"

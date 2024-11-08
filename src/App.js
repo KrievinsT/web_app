@@ -12,9 +12,9 @@ function App() {
 	}
 
 	return (
-		<div className="h-screen w-screen bg-black flex flex-col items-center justify-start py-4">
-			<h1 className="mt-6 text-white text-4xl font-semibold">LinkedIn Data Scrapper</h1>
-			<div className="w-full h-[33.5rem] px-8 my-auto flex flex-wrap flex-row items-center justify-evenly">				
+		<div className="min-h-dvh w-screen max-w-screen bg-black flex flex-col items-center justify-start box-border py-10">
+			<h1 className="mb-16 text-white text-4xl font-semibold">LinkedIn Data Scrapper</h1>
+			<div className="w-full box-border px-0 xl:px-8 mt-[7dvh] flex flex-wrap flex-row items-center justify-evenly">				
 				<InputForm
 					onDataReceived={DataReceived}
 				/>

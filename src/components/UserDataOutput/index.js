@@ -24,7 +24,12 @@ export default function UserDataOutput({data})
 	let openToWork = data.isOpenToWork;
 	let languages = data.languages.map((lang) => lang.name);
 
-	let skills = data.skills;
+	let skills = data.skills.map(skill => (
+		{
+			title: skill.name,
+			value: skill.endorsementsCount ? skill.endorsementsCount : 0
+		}
+	));
 
 	let jobs = [...data.fullPositions];
 	let currentJob;
@@ -41,12 +46,12 @@ export default function UserDataOutput({data})
 
 
 	return (
-		<div className={styles.base_div + " flex-row items-start justify-between box-border px-8 py-4"}>
+		<div className={styles.base_div + " flex-row items-start justify-evenly"}>
 			{/* profile section */}
 			<div className="
-				box-border pt-10 pb-2 px-4
+				box-border pt-16 pb-2
 				flex flex-col items-center justify-start
-				w-64 min-w-64 h-full
+				w-[19.5rem] min-w-[19.5rem] h-full
 			">
 				<object className="size-40" data={profilePictureURL} type="image/png">
 					<QuestionMark/> {/* this will show if the above doesnt load */}
@@ -55,37 +60,52 @@ export default function UserDataOutput({data})
 				{(summary).split("\n").map((str) => 
 					<p className="text-gray-200">{str}</p>
 				)}
-				<div className="w-52 mx-4 mb-7 mt-auto flex flex-col items-start justify-start">
-					<FieldBool
-						title="Hiring"
-						bool={hiring}
-					/>
-					<FieldBool
-						title="Open To Work"
-						bool={openToWork}
-					/>
-					<div className="w-full mt-6 flex-flex-col items-start justify-start">
-						<FieldSmallList
-							title="Languages"
-							data={languages}
-						/>
-						<FieldSmallList
-							title="Employed At"
-							data={currentJob}
-						/>
-					</div>
-				</div>
 			</div>
 			{/* main data */}
 			<div className="
-				w-full
-				flex flex-wrap flex-col items-center justify-start
-				px-9 py-10
+				flex-grow h-full overflow-y-auto
+				flex flex-col items-center justify-start
+				box-border px-10 py-8
 			">
+				<div className="w-full mb-8 flex flex-col items-center justify-start">
+					<SubsectionTitle
+						title="General"
+					/>
+					<div className="w-full flex flex-row items-start justify-between">
+						<div className="w-2/5 flex-flex-col items-start justify-start">
+							<FieldSmallList
+								title="Languages"
+								data={languages}
+							/>
+							<FieldSmallList
+								title="Employed At"
+								data={currentJob}
+							/>
+						</div>
+						<div className="w-2/5 flex-flex-col items-start justify-start">
+							<FieldBool
+								title="Hiring"
+								bool={hiring}
+							/>
+							<FieldBool
+								title="Open To Work"
+								bool={openToWork}
+							/>
+						</div>
+					</div>
+				</div>
+
 				<FieldLargeList
 					title="Past Jobs"
+					header={["Company Name", "Tenure"]}
 					data={jobs}
 				/>
+				<FieldLargeList
+					title="Skills"
+					header={["Skill Name", "Endorsements"]}
+					data={skills}
+				/>
+			</div>
 				{/*<FieldList
 					title="Honors"
 					data={[{name: "123", value: "buh"}]}
@@ -98,7 +118,6 @@ export default function UserDataOutput({data})
 					title="Honors"
 					data={[{name: "123", value: "buh"}]}
 				/>*/}
-			</div>
 		</div>
 	);
 }

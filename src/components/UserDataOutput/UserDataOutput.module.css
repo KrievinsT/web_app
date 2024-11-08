@@ -1,3 +1,7 @@
 .base_div{
-	@apply w-[64rem] h-full bg-neutral-900 rounded flex;
+	@apply
+		min-w-[64rem] max-w-[64rem] h-[33.5rem] 
+		bg-neutral-900 rounded flex flex-nowrap
+		mt-20 2xl:mt-0
+	;
 }
