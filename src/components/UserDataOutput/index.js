@@ -65,7 +65,7 @@ export default function UserDataOutput({data})
 			<div className="
 				flex-grow h-full overflow-y-auto
 				flex flex-col items-center justify-start
-				box-border px-10 py-8
+				box-border px-10 py-10
 			">
 				<div className="w-full mb-8 flex flex-col items-center justify-start">
 					<SubsectionTitle
