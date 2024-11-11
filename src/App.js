@@ -1,29 +1,21 @@
-import { useState } from "react";
-import InputForm from "./components/InputForm";
-import UserDataOutput from "./components/UserDataOutput";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './Components/LandingPage'; 
+import LoginPage from './Components/LoginPage'; 
+import RegisterPage from './Components/RegisterPage';
+import UserData from './Components/UserData';
 
-function App() {
-	let [userData, setUserData] = useState({});
-	
-	function DataReceived(data)
-	{
-		setUserData(data);
-		console.log(data);
-	}
-
-	return (
-		<div className="min-h-dvh w-screen max-w-screen bg-black flex flex-col items-center justify-start box-border py-10">
-			<h1 className="mb-16 text-white text-4xl font-semibold">LinkedIn Data Scrapper</h1>
-			<div className="w-full box-border px-0 xl:px-8 mt-[7dvh] flex flex-wrap flex-row items-center justify-evenly">				
-				<InputForm
-					onDataReceived={DataReceived}
-				/>
-				<UserDataOutput
-					data={userData}
-				/>
-			</div>
-		</div>
-	);
-}
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/userdata" element={<UserData />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;
