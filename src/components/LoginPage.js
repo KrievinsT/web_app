@@ -1,28 +1,150 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const LoginPage = () => {
+  // State to manage form inputs
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  // Email validation function
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Password validation function
+  const validatePassword = (password) => {
+    return password.length >= 6;
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let valid = true;
+
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      valid = false;
+    } else {
+      setEmailError('');
+    }
+
+    if (!validatePassword(password)) {
+      setPasswordError('Password must be at least 6 characters long.');
+      valid = false;
+    } else {
+      setPasswordError('');
+    }
+
+    if (valid) {
+      // Proceed with form submission (e.g., API call)
+      console.log('Form submitted successfully');
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-96 border-2 border-blue-600">
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <form>
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-semibold">Email</label>
-            <input type="email" className="border border-gray-300 rounded w-full p-2" />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div
+        className="bg-white p-8 rounded shadow-md w-full sm:w-96 border-2 border-blue-600"
+        role="form"
+        aria-labelledby="login-title"
+      >
+        <h2
+          id="login-title"
+          className="text-2xl sm:text-3xl font-bold mb-6 text-center sm:text-left"
+        >
+          Login
+        </h2>
+        <form onSubmit={handleSubmit}>
+          {/* Email Input */}
+          <div className="mb-6">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-semibold"
+              aria-label="Email address"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              required
+              className="border border-gray-300 rounded w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-describedby="email-help"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <small
+              id="email-help"
+              className="text-gray-500 text-xs"
+              aria-live="polite"
+            >
+              We'll never share your email with anyone else.
+            </small>
+            {emailError && (
+              <p className="text-red-600 text-xs mt-1" aria-live="assertive">
+                {emailError}
+              </p>
+            )}
           </div>
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-semibold">Password</label>
-            <input type="password" className="border border-gray-300 rounded w-full p-2" />
+
+          {/* Password Input */}
+          <div className="mb-6">
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-semibold"
+              aria-label="Password"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              required
+              className="border border-gray-300 rounded w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-describedby="password-help"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <small
+              id="password-help"
+              className="text-gray-500 text-xs"
+              aria-live="polite"
+            >
+              Make sure your password is secure.
+            </small>
+            {passwordError && (
+              <p className="text-red-600 text-xs mt-1" aria-live="assertive">
+                {passwordError}
+              </p>
+            )}
           </div>
-          <button className="bg-blue-600 text-white rounded py-2 w-full hover:bg-blue-700 transition duration-300">
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="bg-blue-600 text-white rounded py-3 w-full hover:bg-blue-700 transition duration-300"
+            aria-label="Login"
+          >
             Login
           </button>
         </form>
+
         {/* Link to Register Page */}
-        <p className="mt-4 text-center">
+        <p className="mt-6 text-center text-sm">
           Don't have an account?{' '}
-          <Link to="/register" className="text-blue-600 hover:underline">
+          <Link
+            to="/register"
+            className="text-blue-600 hover:underline"
+            aria-label="Go to registration page"
+          >
             Register
           </Link>
         </p>
