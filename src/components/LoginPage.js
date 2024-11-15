@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
 
 const LoginPage = () => {
-  // State to manage form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  // Email validation function
+  
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  // Password validation function
   const validatePassword = (password) => {
     return password.length >= 6;
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -40,7 +37,6 @@ const LoginPage = () => {
     }
 
     if (valid) {
-      // Proceed with form submission (e.g., API call)
       console.log('Form submitted successfully');
     }
   };
@@ -59,7 +55,6 @@ const LoginPage = () => {
           Login
         </h2>
         <form onSubmit={handleSubmit}>
-          {/* Email Input */}
           <div className="mb-6">
             <label
               htmlFor="email"
@@ -93,7 +88,6 @@ const LoginPage = () => {
             )}
           </div>
 
-          {/* Password Input */}
           <div className="mb-6">
             <label
               htmlFor="password"
@@ -127,7 +121,6 @@ const LoginPage = () => {
             )}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="bg-blue-600 text-white rounded py-3 w-full hover:bg-blue-700 transition duration-300"
@@ -137,7 +130,6 @@ const LoginPage = () => {
           </button>
         </form>
 
-        {/* Link to Register Page */}
         <p className="mt-6 text-center text-sm">
           Don't have an account?{' '}
           <Link
