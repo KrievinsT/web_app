@@ -1,28 +1,33 @@
 
-import styles from "./UserDataOutput.module.css";
+import {
+	Languages,
+	Factory,
+	BriefcaseBusiness,
+	ContactRound
+} from "lucide-react"
 
 import QuestionMark from "./QuestionMark";
-import SubsectionTitle from "./SubsectionTitle";
-import FieldBool from "./FieldBool"
-import FieldSmallList from "./FieldSmallList";
-import FieldLargeList from "./FieldLargeList";
+import FieldString from "./FieldString";
+import FieldList from "./FieldList";
+
+let icon_color = "rgb(60, 150, 255)";
+let icon_size = 17;
 
 export default function UserDataOutput({data})
 {
 	if(data.fullPositions === undefined || data.skills === undefined)
-		return (
-			<div className={styles.base_div + " items-center justify-center"}>
-				<p className="text-white font-bold text-2xl">NO DATA</p>
-			</div>
-		);
+		return <></>;
 
-	let summary = data.headline;
+	let summary = data.headline;//.split("\n");
+	//for(let i = 0; i < summary.length-1; ++i)
+	//	summary[i] = <>{summary[i]}<br/></>;
+
 	let profilePictureURL = data.profilePicture;
 	let fullName = data.firstName + " " + data.lastName
 
 	let hiring = data.isHiring;
 	let openToWork = data.isOpenToWork;
-	let languages = data.languages.map((lang) => lang.name);
+	let languages = data.languages.map((lang) => lang.name).join(", ");
 
 	let skills = data.skills.map(skill => (
 		{
@@ -31,93 +36,72 @@ export default function UserDataOutput({data})
 		}
 	));
 
-	let jobs = [...data.fullPositions];
+	let jobs = [];
 	let currentJob;
-	if(jobs[0].end.year === 0)
-	{
-		currentJob = [jobs[0].companyName];
-		jobs.shift();
-	}
-	else
-		currentJob = ["Nowhere"];
 
-	jobs = jobs.map(job => ({title: job.companyName, value: job.start.year + " - " + job.end.year}));
+	if(data.fullPositions[0].end.year === 0)
+		currentJob = data.fullPositions[0].companyName;
+	else
+		currentJob = "Unemployed";
+	
+	for(let i = 1; i < data.fullPositions.length; ++i)
+		jobs.push({
+			title: data.fullPositions[i].companyName,
+			value: data.fullPositions[i].start.year + " - " + data.fullPositions[i].end.year
+		});
+
 	let honors = data.honors;
 
 
 	return (
-		<div className={styles.base_div + " flex-row items-start justify-evenly"}>
-			{/* profile section */}
-			<div className="
-				box-border pt-16 pb-2
-				flex flex-col items-center justify-start
-				w-[19.5rem] min-w-[19.5rem] h-full
+		<div className="
+			w-[90%] sm:w-[35rem]
+			transition-all duration-100
+			box-border px-10 sm:px-12 pt-12 pb-10
+			flex flex-col items-center justify-start
+			bg-[rgb(10,10,10)] rounded-2xl
+			border border-solid border-default_border
+		">
+			<object className="size-36 rounded-full overflow-hidden" data={profilePictureURL} type="image/png">
+				<QuestionMark/> {/* this will show if the above doesnt load */}
+			</object>
+			<h3 className="
+				mt-6
+				text-[rgb(240,240,240)] text-[1.7rem] font-bold
 			">
-				<object className="size-40" data={profilePictureURL} type="image/png">
-					<QuestionMark/> {/* this will show if the above doesnt load */}
-				</object>
-				<p className="text-white font-bold text-2xl mt-2 py-3">{fullName}</p>
-				{(summary).split("\n").map((str) => 
-					<p className="text-gray-200">{str}</p>
-				)}
-			</div>
-			{/* main data */}
-			<div className="
-				flex-grow h-full overflow-y-auto
-				flex flex-col items-center justify-start
-				box-border px-10 py-10
+				{fullName}
+			</h3>
+			<p className="
+				text-neutral-200 text-center
 			">
-				<div className="w-full mb-8 flex flex-col items-center justify-start">
-					<SubsectionTitle
-						title="General"
+				{summary}
+			</p>
+			<div className="w-full mt-8 mb-4 flex flex-col items-center justify-between sm:flex-row sm:items-start">
+				<div className="w-full sm:w-[44%] flex flex-col items-center justify-start">
+					<FieldString
+						title={"Languages"}
+						string={languages}
+						icon={<Languages color={icon_color} size={icon_size}/>}
 					/>
-					<div className="w-full flex flex-row items-start justify-between">
-						<div className="w-2/5 flex-flex-col items-start justify-start">
-							<FieldSmallList
-								title="Languages"
-								data={languages}
-							/>
-							<FieldSmallList
-								title="Employed At"
-								data={currentJob}
-							/>
-						</div>
-						<div className="w-2/5 flex-flex-col items-start justify-start">
-							<FieldBool
-								title="Hiring"
-								bool={hiring}
-							/>
-							<FieldBool
-								title="Open To Work"
-								bool={openToWork}
-							/>
-						</div>
-					</div>
+					<FieldString
+						title={"Current Workplace"}
+						string={currentJob}
+						icon={<Factory color={icon_color} size={icon_size}/>}
+					/>
 				</div>
-
-				<FieldLargeList
-					title="Past Jobs"
-					header={["Company Name", "Tenure"]}
-					data={jobs}
-				/>
-				<FieldLargeList
-					title="Skills"
-					header={["Skill Name", "Endorsements"]}
-					data={skills}
-				/>
+				<div className="w-full sm:w-[44%] flex flex-col items-center justify-start">
+					<FieldString
+						title={"Hiring"}
+						string={hiring ? "Yes" : "No"}
+						icon={<BriefcaseBusiness color={icon_color} size={icon_size}/>}
+					/>
+					<FieldString
+						title={"Open To Work"}
+						string={openToWork ? "Yes" : "No"}
+						icon={<ContactRound color={icon_color} size={icon_size}/>}
+					/>
+				</div>
 			</div>
-				{/*<FieldList
-					title="Honors"
-					data={[{name: "123", value: "buh"}]}
-				/>
-				<FieldList
-					title="Honors"
-					data={[{name: "123", value: "buh"}]}
-				/>
-				<FieldList
-					title="Honors"
-					data={[{name: "123", value: "buh"}]}
-				/>*/}
 		</div>
 	);
 }

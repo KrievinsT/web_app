@@ -3,11 +3,11 @@ export default function QuestionMark()
 	return (
 		<div className="
 			select-none
-			w-full h-full
+			size-full
 			flex items-center justify-center
-			bg-neutral-800
+			bg-[rgb(25,25,25)]
 			text-white
-			text-6xl"
+			text-[360%] font-semibold"
 		>
 			?
 		</div>

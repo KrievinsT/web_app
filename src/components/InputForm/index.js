@@ -1,4 +1,6 @@
 
+import { UserRoundSearch } from "lucide-react"
+
 import { useRef } from "react";
 
 import axios from "axios";
@@ -45,7 +47,12 @@ export default function InputForm({onDataReceived})
 		if(userInput === "")
 			return OnError("Please enter the target user");
 
-		let urlRegex = /https:\/\/www\.linkedin\.com\/in\/([^\/?]*?)\/*(\?.*)?$/; // check if string starts with https://www.linkedin.com/in/ and captures the following text, allowing for a trailing slash and/or query string
+		let urlRegex = /^(?:(?:https:\/\/)?|(?:http:\/\/)?)?(?:www\.)?linkedin\.com\/in\/([^\/?]+)\/*(?:\?.*)?$/;
+		// 1: checks if the string starts with either http:// or https://, or nothing, but nothing else
+		// 2: checks for a "www.", or nothing
+		// 3: checks for a linkedin.com/in/
+		// 4: checks for and captures the following string until one of the following character combinations is met - "", "/", "?...", "/?..."
+
 		let urlMatch = userInput.match(urlRegex);
 
 		let username = urlMatch === null ? userInput : urlMatch[1];
@@ -84,34 +91,44 @@ export default function InputForm({onDataReceived})
 	return (
 		<div className="
 			flex flex-col items-center justify-start
-			bg-gradient-to-b from-neutral-800 to-neutral-900 rounded
-			box-content px-9 py-7
-			w-80 2xl:mr-8
+			w-4/5 sm:w-96 h-24
+			transition-all duration-100
 		">
-			<input
-				type="text"
-				ref={inputElem}
-				placeholder="Username or URL"
-				className="
-						box-border px-2
-						placeholder:text-slate-400
-						border-none rounded
-						w-full h-9
+			<div className="
+				relative w-full
+			">
+				<div className="
+					absolute left-[16px] top-1/2 bottomx-1/2 translate-y-[-50%]
+					flex items-center justify-center
+				">
+					<UserRoundSearch color="rgb(150,150,150)" size={18}/>
+				</div>
+				<input
+					onKeyUp={function(e){
+						if(e.key==="Enter")
+							OnSubmit();
+					}}
 
-						focus:outline-none
-					"
-			/>
-			<button 
-				onClick={OnSubmit}
-				className="					
-					mt-4 bg-blue-700 rounded
-					text-white
-					w-full h-10
-				"
-			>
-				Submit
-			</button>
-			<p className="text-red-600" ref={errorElem}></p>
+					type="text"
+					ref={inputElem}
+					placeholder="Username or URL"
+					className="
+							box-border pl-[44px] pr-4
+							bg-[rgb(15,15,15)] text-white
+							placeholder:text-[rgb(100,100,100)]
+							rounded-xl
+							w-full h-[2.75rem]
+							border border-solid border-default_border
+							outline-none
+
+							focus:border-highlight_border
+							transition-color ease-linear duration-150 
+						"
+				>
+				</input>
+			</div>
+			
+			<p className="text-red-600 mt-auto font-semibold" ref={errorElem}></p>
 		</div>
 	);
 }
