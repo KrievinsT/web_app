@@ -76,7 +76,7 @@ export default function UserDataOutput({data})
 			">
 				{summary}
 			</p>
-			<div className="w-full mt-8 mb-4 flex flex-col items-center justify-between sm:flex-row sm:items-start">
+			<div className="w-full mt-8 flex flex-col items-center justify-between sm:flex-row sm:items-start">
 				<div className="w-full sm:w-[44%] flex flex-col items-center justify-start">
 					<FieldString
 						title={"Languages"}
